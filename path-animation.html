@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pen Path Animation</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0d0d0d;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    header {
+      padding: 2rem;
+      font-size: 2rem;
+      text-align: center;
+      color: #ccc;
+      text-transform: uppercase;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .path-bg {
+      fill: none;
+      stroke: #333;
+      stroke-width: 4;
+    }
+
+    .path-fg {
+      fill: none;
+      stroke: #00ffff;
+      stroke-width: 4;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: draw 4s ease forwards infinite;
+    }
+
+    @keyframes draw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .pen {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+      offset-path: path("M100,300 C200,100 400,500 600,300");
+      offset-rotate: auto;
+      animation: movePen 4s ease forwards;
+    }
+
+    @keyframes movePen {
+      to {
+        offset-distance: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>Path Animation</header>
+  <div class="container">
+    <svg viewBox="0 0 700 600">
+      <path class="path-bg" d="M100,300 C200,100 400,500 600,300" />
+      <path class="path-fg" d="M100,300 C200,100 400,500 600,300" />
+    </svg>
+    <div class="pen"></div>
+  </div>
+</body>
+</html>
