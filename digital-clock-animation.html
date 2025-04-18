@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Digital Clock with Date</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background: #121212;
+      color: #00ffea;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .clock {
+      font-size: 4rem;
+      background: #000;
+      padding: 20px 40px;
+      border-radius: 12px;
+      box-shadow:
+        0 0 10px rgba(0,255,234,0.7),
+        inset 0 0 10px rgba(0,255,234,0.7);
+      display: flex;
+      align-items: center;
+    }
+    .colon {
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    .date {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: rgba(0, 255, 234, 0.8);
+      text-shadow: 0 0 5px rgba(0,255,234,0.7);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="clock">
+    <span id="hours">00</span><span class="colon">:</span>
+    <span id="minutes">00</span><span class="colon">:</span>
+    <span id="seconds">00</span>
+  </div>
+  <div class="date" id="dateDisplay">Loading date...</div>
+
+  <script>
+    // Update time every second
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('hours').textContent   = h;
+      document.getElementById('minutes').textContent = m;
+      document.getElementById('seconds').textContent = s;
+    }
+    // Display current date in "Weekday, Month Day, Year" format
+    function updateDate() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('dateDisplay').textContent = now.toLocaleDateString(undefined, options);
+    }
+    // Initialize and set intervals
+    updateClock();  // Initial call to avoid delay
+    updateDate();
+    setInterval(updateClock, 1000);
+    // Update date at midnight
+    setInterval(updateDate, 60 * 60 * 1000);
+  </script>
+
+</body>
+</html>
