@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Analog Clock</title>
+  <!-- Import Poppins font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    /* Reset and basic styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #121212;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Header styling */
+    header {
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 36px;
+      background: linear-gradient(90deg, #00ffff, #ff00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Clock container */
+    .clock-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+    }
+
+    /* Clock face */
+    .clock {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      position: relative;
+      background-color: #1e1e2f;
+      box-shadow: 0 0 20px rgba(0, 255, 234, 0.7),
+                  inset 0 0 20px rgba(0, 255, 234, 0.2);
+      overflow: hidden;
+    }
+
+    /* Common hand styling */
+    .hand {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      transform: translateX(-50%) translateY(-100%) rotate(90deg);
+      transition: transform 0.05s ease-in-out;
+    }
+
+    /* Specific hand styles */
+    .hour {
+      width: 6px;
+      height: 80px;
+      background: #00ffff;
+      z-index: 2;
+    }
+
+    .minute {
+      width: 4px;
+      height: 110px;
+      background: #00ffff;
+      z-index: 3;
+    }
+
+    .second {
+      width: 2px;
+      height: 130px;
+      background: #ff00ff;
+      z-index: 4;
+    }
+
+    /* Center dot */
+    .center-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 12px;
+      height: 12px;
+      background: #ffffff;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 8px rgba(0, 255, 234, 0.8);
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Analog Clock</h1>
+  </header>
+  <div class="clock-container">
+    <div class="clock">
+      <div class="hand hour" id="hour"></div>
+      <div class="hand minute" id="minute"></div>
+      <div class="hand second" id="second"></div>
+      <div class="center-dot"></div>
+    </div>
+  </div>
+
+  <script>
+    const hourHand = document.getElementById('hour');
+    const minuteHand = document.getElementById('minute');
+    const secondHand = document.getElementById('second');
+
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours() % 12;
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+
+      const hourDeg = (hours * 30) + (minutes * 0.5);
+      const minuteDeg = (minutes * 6) + (seconds * 0.1);
+      const secondDeg = seconds * 6;
+
+      hourHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${hourDeg}deg)`;
+      minuteHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${minuteDeg}deg)`;
+      secondHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${secondDeg}deg)`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock(); // Initial call to set the clock immediately
+  </script>
+</body>
+</html>
