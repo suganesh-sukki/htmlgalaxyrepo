@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Neon Audio Wave</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* Reset & Centering */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      height: 100vh; background: #000;
+      overflow: hidden;
+    }
+
+    /* Container for the neon bars */
+    .wave {
+      display: flex;
+      gap: 4px;
+    }
+
+    /* Neon bar styling */
+    .bar {
+      width: 3px;
+      height: 50px;
+      background: var(--color);
+      border-radius: 4px;
+      box-shadow:
+        0 0 8px var(--color),
+        0 0 16px var(--color),
+        0 0 24px var(--color);
+      animation: neon-jump 1s ease-in-out infinite var(--delay) both;
+      transform-origin: bottom;
+    }
+
+    /* Jump animation */
+    @keyframes neon-jump {
+      0%,100% { transform: scaleY(0.4); }
+      50%     { transform: scaleY(var(--amp)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wave" id="wave"></div>
+
+  <script>
+    const neonColors = [
+      '#0ff',  // neon cyan
+      '#f0f',  // neon magenta
+      '#0f0',  // neon green
+      '#ff0'   // neon yellow
+    ];
+    const container = document.getElementById('wave');
+    const BAR_COUNT = 100;
+
+    for (let i = 0; i < BAR_COUNT; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'bar';
+      // Cycle through neon palette
+      bar.style.setProperty('--color', neonColors[i % neonColors.length]);
+      // Random amplitude between 0.5 and 1.5
+      bar.style.setProperty('--amp', (Math.random() + 0.5).toFixed(2));
+      // Random delay up to 1s
+      bar.style.setProperty('--delay', (Math.random()).toFixed(2) + 's');
+      container.appendChild(bar);
+    }
+  </script>
+</body>
+</html>
