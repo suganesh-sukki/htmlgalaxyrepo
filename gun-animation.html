@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Gun Animation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      cursor: crosshair;
+      font-family: Arial, sans-serif;
+    }
+
+    .ammo-counter {
+      color: #fff;
+      font-size: 24px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .gun-container {
+      position: relative;
+      width: 200px;
+      height: 100px;
+    }
+
+    .gun {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: #444;
+      border-radius: 10px;
+    }
+
+    .gun-barrel {
+      position: absolute;
+      width: 100px;
+      height: 20px;
+      background-color: #666;
+      top: 40px;
+      right: -100px;
+      border-radius: 5px;
+    }
+
+    .trigger {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #777;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 5px;
+      cursor:pointer
+    }
+
+    .muzzle-flash {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-color: yellow;
+      top: 35px;
+      right: -130px;
+      border-radius: 50%;
+      opacity: 0;
+    }
+
+    .bullet-casing {
+      position: absolute;
+      width: 10px;
+      height: 5px;
+      background-color: gold;
+      top: 50px;
+      right: -10px;
+      border-radius: 2px;
+      opacity: 0;
+    }
+
+    @keyframes flash {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    @keyframes eject {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(50px, -50px) rotate(720deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ammo-counter" id="ammoCounter">Ammo: 6</div>
+  <div class="gun-container" id="gunContainer">
+    <div class="gun" id="gun">
+      <div class="gun-barrel"></div>
+      <div class="trigger"></div>
+      <div class="muzzle-flash" id="muzzleFlash"></div>
+      <div class="bullet-casing" id="bulletCasing"></div>
+    </div>
+  </div>
+
+  <!-- Audio Elements -->
+  <audio id="gunshotSound" preload="auto">
+    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=" type="audio/wav">
+  </audio>
+  <audio id="reloadSound" preload="auto">
+    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=" type="audio/wav">
+  </audio>
+
+  <script>
+    const gunContainer = document.getElementById('gunContainer');
+    const ammoCounter = document.getElementById('ammoCounter');
+    const muzzleFlash = document.getElementById('muzzleFlash');
+    const bulletCasing = document.getElementById('bulletCasing');
+    const gunshotSound = document.getElementById('gunshotSound');
+    const reloadSound = document.getElementById('reloadSound');
+
+    let ammo = 6;
+    const maxAmmo = 6;
+    let isReloading = false;
+
+    function updateAmmoDisplay() {
+      ammoCounter.textContent = ammo > 0 ? `Ammo: ${ammo}` : 'Reload';
+    }
+
+    function fireGun() {
+      if (isReloading || ammo <= 0) return;
+
+      ammo--;
+      updateAmmoDisplay();
+
+      // Play gunshot sound
+      gunshotSound.currentTime = 0;
+      gunshotSound.play();
+
+      // Show muzzle flash
+      muzzleFlash.style.animation = 'flash 0.1s ease-out';
+      muzzleFlash.style.opacity = 1;
+      setTimeout(() => {
+        muzzleFlash.style.opacity = 0;
+        muzzleFlash.style.animation = '';
+      }, 100);
+
+      // Eject bullet casing
+      bulletCasing.style.animation = 'eject 0.5s ease-out';
+      bulletCasing.style.opacity = 1;
+      setTimeout(() => {
+        bulletCasing.style.opacity = 0;
+        bulletCasing.style.animation = '';
+      }, 500);
+    }
+
+    function reloadGun() {
+      if (ammo === maxAmmo || isReloading) return;
+
+      isReloading = true;
+      reloadSound.currentTime = 0;
+      reloadSound.play();
+
+      setTimeout(() => {
+        ammo = maxAmmo;
+        updateAmmoDisplay();
+        isReloading = false;
+      }, 1000); // Simulate reload time
+    }
+
+    // Event listeners
+    gunContainer.addEventListener('click', fireGun);
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        fireGun();
+      } else if (e.code === 'KeyR') {
+        reloadGun();
+      }
+    });
+
+    // Initialize ammo display
+    updateAmmoDisplay();
+  </script>
+</body>
+</html>
