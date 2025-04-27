@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Intro with Audio</title>
+  <style>
+    body {
+      background-color: #333;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .header, .subheader {
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .header {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .subheader {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .switch-container {
+      position: relative;
+      width: 100px;
+      height: 50px;
+      background: #333;
+      border-radius: 25px;
+      box-shadow: inset 8px 8px 15px #2a2a2a,
+                  inset -8px -8px 15px #1a1a1a;
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .switch-container::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      width: 30px;
+      height: 30px;
+      background: linear-gradient(145deg, #4d4d4d, #2a2a2a);
+      border-radius: 50%;
+      box-shadow: 5px 5px 15px #2a2a2a,
+                  -5px -5px 15px #1a1a1a;
+      transform: translateY(-50%);
+      transition: left 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    input[type="checkbox"]:checked + .switch-container {
+      background: #4caf50;
+      box-shadow: inset 8px 8px 15px #3e8e41,
+                  inset -8px -8px 15px #5edc6a;
+    }
+
+    input[type="checkbox"]:checked + .switch-container::before {
+      left: 60px;
+      background: linear-gradient(145deg, #ffffff, #d1d1d1);
+      box-shadow: 5px 5px 15px #bebebe,
+                  -5px -5px 15px #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">Welcome to HTML Galaxy</div>
+  <div class="subheader">Experience sleek, modern interfaces with every click.</div>
+
+  <label>
+    <input type="checkbox" id="toggle" onchange="changeColors()">
+    <div class="switch-container"></div>
+  </label>
+
+  
+
+  <script>
+    window.onload = function() {
+      const audio = document.getElementById('introAudio');
+      const header = document.querySelector('.header');
+      const subheader = document.querySelector('.subheader');
+      const toggle = document.getElementById('toggle');
+
+      // Animate header and subheader
+      setTimeout(() => {
+        header.style.opacity = 1;
+        header.style.transform = 'translateY(0)';
+      }, 1000);
+
+      setTimeout(() => {
+        subheader.style.opacity = 1;
+        subheader.style.transform = 'translateY(0)';
+      }, 3000);
+
+      // Change background and text colors based on toggle
+      toggle.addEventListener('change', () => {
+        if (toggle.checked) {
+          document.body.style.backgroundColor = '#ffffff';
+          header.style.color = '#333';
+          subheader.style.color = '#333';
+        } else {
+          document.body.style.backgroundColor = '#333';
+          header.style.color = '#fff';
+          subheader.style.color = '#fff';
+        }
+      });
+    };
+  </script>
+
+</body>
+</html>
