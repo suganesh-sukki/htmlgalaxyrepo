@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Premium Fancy Buttons</title>
+  <style>
+    body {
+      background: radial-gradient(circle at top left, #0f0f0f, #000);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      gap: 50px;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+    }
+
+    button {
+      padding: 16px 48px;
+      font-size: 18px;
+      font-weight: 600;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.7),
+                  -8px -8px 20px rgba(255, 255, 255, 0.05);
+    }
+
+    /* 1. Glow + Pulse */
+    .btn-glow:hover {
+      box-shadow: 0 0 30px 10px rgba(0, 255, 255, 0.8);
+      background: linear-gradient(135deg, #0ff, #09f);
+      color: #000;
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+
+    /* 2. Gradient Slide */
+    .btn-slide {
+      background: linear-gradient(270deg, #ff7f50, #ff6347, #ff1493);
+      background-size: 600% 600%;
+    }
+    .btn-slide:hover {
+      animation: gradientShift 3s ease infinite;
+      transform: scale(1.1);
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 3. Bounce Pop */
+    .btn-bounce:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-rotate {
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transform-style: preserve-3d; /* Crucial for 3D effects */
+    }
+
+    .btn-rotate:hover {
+    transform: perspective(1000px) rotateY(20deg) scale(1.05);
+    box-shadow: 0 12px 24px rgba(255, 255, 255, 0.3);
+    }
+
+    /* 5. Fancy Underline */
+    .btn-underline {
+      position: relative;
+      z-index: 0;
+    }
+    .btn-underline::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ff0, #f0f);
+      border-radius: 2px;
+      transition: width 0.4s ease, left 0.4s ease;
+      transform: translateX(-50%);
+    }
+    .btn-underline:hover::after {
+      width: 80%;
+      left: 50%;
+    }
+
+    /* General Hover Lift */
+    button:hover {
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+  </style>
+</head>
+<body>
+  <button class="btn-glow">✨ Glow & Pulse</button>
+  <button class="btn-slide">🌈 Gradient Slide</button>
+  <button class="btn-bounce">🏀 Bounce Pop</button>
+  <button class="btn-rotate">🔄 3D Flip</button>
+  <button class="btn-underline">📏 Fancy Underline</button>
+</body>
+</html>
