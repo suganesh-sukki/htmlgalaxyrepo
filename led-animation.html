@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Color LED Dot Display</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #led-grid {
+      display: grid;
+      grid-template-columns: repeat(100, 6px);
+      grid-template-rows: repeat(100, 6px);
+      gap: 1px;
+      margin-top: 20px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background-color: #222;
+      border-radius: 50%;
+      transition: background 0.1s ease;
+    }
+
+    /* Number-specific "on" styles */
+    .on-1  { background-color: #00ff00; box-shadow: 0 0 2px #00ff00; }
+    .on-2  { background-color: #00ffff; box-shadow: 0 0 2px #00ffff; }
+    .on-3  { background-color: #ff00ff; box-shadow: 0 0 2px #ff00ff; }
+    .on-4  { background-color: #ffff00; box-shadow: 0 0 2px #ffff00; }
+    .on-5  { background-color: #ff8800; box-shadow: 0 0 2px #ff8800; }
+    .on-6  { background-color: #ff4444; box-shadow: 0 0 2px #ff4444; }
+    .on-7  { background-color: #4488ff; box-shadow: 0 0 2px #4488ff; }
+    .on-8  { background-color: #44ff88; box-shadow: 0 0 2px #44ff88; }
+    .on-9  { background-color: #cc00cc; box-shadow: 0 0 2px #cc00cc; }
+    .on-10 { background-color: #ffaa00; box-shadow: 0 0 2px #ffaa00; }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 28px;
+      font-size: 18px;
+      cursor: pointer;
+      background: #00ff00;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 255, 0, 0.3);
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #00ff88;
+      box-shadow: 0 0 20px #00ff88;
+      transform: scale(1.05);
+    }
+
+    button:active {
+      transform: scale(0.95);
+      background: #00cc66;
+      box-shadow: 0 0 10px #00cc66 inset;
+    }
+  </style>
+</head>
+<body>
+
+<button onclick="nextNumber()">Next Number</button>
+<div id="led-grid"></div>
+
+<script>
+  const grid = document.getElementById("led-grid");
+  const dots = [];
+  const size = 100;
+  let currentNum = 1;
+
+  const digitMap = {
+    0: [
+      "0011111000",
+      "0110001100",
+      "1100000110",
+      "1100000110",
+      "1100000110",
+      "1100000110",
+      "1100000110",
+      "1100000110",
+      "0110001100",
+      "0011111000"
+    ],
+    1: [
+      "0001100000",
+      "0011100000",
+      "0111100000",
+      "0001100000",
+      "0001100000",
+      "0001100000",
+      "0001100000",
+      "0001100000",
+      "0011110000",
+      "0111111000"
+    ],
+    2: [
+      "0011110000",
+      "0110011000",
+      "1100001100",
+      "0000001100",
+      "0000011000",
+      "0000110000",
+      "0001100000",
+      "0011000000",
+      "0111111100",
+      "1111111100"
+    ],
+    3: [
+      "0011110000",
+      "0110011000",
+      "0000011000",
+      "0000110000",
+      "0001110000",
+      "0000011000",
+      "0000011000",
+      "0000011000",
+      "0110011000",
+      "0011110000"
+    ],
+    4: [
+      "0000011000",
+      "0000111000",
+      "0001111000",
+      "0011011000",
+      "0110011000",
+      "1111111100",
+      "1111111100",
+      "0000011000",
+      "0000011000",
+      "0000011000"
+    ],
+    5: [
+      "1111111100",
+      "1100000000",
+      "1100000000",
+      "1111110000",
+      "0000011000",
+      "0000011000",
+      "0000011000",
+      "0000011000",
+      "0110011000",
+      "0011110000"
+    ],
+    6: [
+      "0011111000",
+      "0110000000",
+      "1100000000",
+      "1111110000",
+      "1100011000",
+      "1100001100",
+      "1100001100",
+      "1100001100",
+      "0110011000",
+      "0011110000"
+    ],
+    7: [
+      "1111111100",
+      "0000001100",
+      "0000011000",
+      "0000110000",
+      "0001100000",
+      "0011000000",
+      "0110000000",
+      "0110000000",
+      "0110000000",
+      "0110000000"
+    ],
+    8: [
+      "0011110000",
+      "0110011000",
+      "1100001100",
+      "0110011000",
+      "0011110000",
+      "0110011000",
+      "1100001100",
+      "1100001100",
+      "0110011000",
+      "0011110000"
+    ],
+    9: [
+      "0011110000",
+      "0110011000",
+      "1100001100",
+      "1100001100",
+      "0110011000",
+      "0011111000",
+      "0000001100",
+      "0000001100",
+      "0110011000",
+      "0011110000"
+    ],
+    10: [
+      "000110000000111110000",
+      "001111000001100011000",
+      "011111100011000001100",
+      "000110000011000001100",
+      "000110000011000001100",
+      "000110000011000001100",
+      "000110000011000001100",
+      "000110000011000001100",
+      "001111100001100011000",
+      "011111110000111110000"
+    ]
+  };
+
+  for (let i = 0; i < size * size; i++) {
+    const dot = document.createElement("div");
+    dot.className = "dot";
+    grid.appendChild(dot);
+    dots.push(dot);
+  }
+
+  function drawDigit(num) {
+    dots.forEach(dot => {
+      dot.className = "dot"; // clear previous .on-* class
+    });
+
+    const rows = digitMap[num];
+    const scale = 5;
+    const rowCount = rows.length;
+    const colCount = rows[0].length;
+    const totalHeight = rowCount * scale;
+    const totalWidth = colCount * scale;
+
+    const offsetX = Math.floor((size - totalWidth) / 2);
+    const offsetY = Math.floor((size - totalHeight) / 2);
+
+    rows.forEach((row, y) => {
+      for (let x = 0; x < row.length; x++) {
+        if (row[x] === "1") {
+          for (let dy = 0; dy < scale; dy++) {
+            for (let dx = 0; dx < scale; dx++) {
+              const gx = offsetX + x * scale + dx;
+              const gy = offsetY + y * scale + dy;
+              if (gx < size && gy < size) {
+                dots[gy * size + gx].classList.add(`on-${num}`);
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  function nextNumber() {
+    drawDigit(currentNum);
+    currentNum++;
+    if (currentNum > 10) currentNum = 1;
+  }
+
+  drawDigit(currentNum);
+</script>
+
+</body>
+</html>
