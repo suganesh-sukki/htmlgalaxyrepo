@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Big Stock Graph</title>
+  <style>
+    body {
+      margin: 0;
+      background: #101010;
+      color: white;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .graph-container {
+      width: 90%;
+      max-width: 1000px;
+      height: 400px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .line {
+      stroke: #00ff88;
+      stroke-width: 3;
+      fill: none;
+      stroke-dasharray: 2000;
+      stroke-dashoffset: 2000;
+      animation: draw 4s ease-out forwards;
+    }
+
+    .grid {
+      stroke: #444;
+      stroke-width: 1;
+    }
+
+    @keyframes draw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="graph-container">
+    <svg viewBox="0 0 800 400">
+      <!-- Grid lines -->
+      <g class="grid">
+        <line x1="0" y1="50" x2="800" y2="50"/>
+        <line x1="0" y1="100" x2="800" y2="100"/>
+        <line x1="0" y1="150" x2="800" y2="150"/>
+        <line x1="0" y1="200" x2="800" y2="200"/>
+        <line x1="0" y1="250" x2="800" y2="250"/>
+        <line x1="0" y1="300" x2="800" y2="300"/>
+        <line x1="0" y1="350" x2="800" y2="350"/>
+      </g>
+
+      <!-- Line path (you can generate more points dynamically) -->
+      <path class="line" d="M0,300 L50,280 L100,260 L150,200 L200,230 L250,180 L300,220 L350,160 L400,190 L450,140 L500,180 L550,120 L600,150 L650,100 L700,130 L750,80 L800,100"/>
+    </svg>
+  </div>
+
+</body>
+</html>
