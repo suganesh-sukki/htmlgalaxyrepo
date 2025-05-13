@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Radar Detection Alert</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .radar {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #003300 0%, #000000 100%);
+      box-shadow: 0 0 20px #0f0;
+      overflow: hidden;
+    }
+
+    .tick, .label {
+      position: absolute;
+      transform-origin: center center;
+    }
+
+    .tick {
+      width: 2px;
+      height: 10px;
+      background: #0f0;
+    }
+
+    .label {
+      color: #0f0;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .blip {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: red;
+      border-radius: 50%;
+      box-shadow: 0 0 10px red;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .blip.alert {
+      animation: blink 1s infinite;
+      opacity: 1;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="radar" id="radar"></div>
+
+  <script>
+    const radar = document.getElementById('radar');
+    const center = 150;
+    const radius = 140;
+
+    for (let deg = 0; deg < 360; deg += 10) {
+      const rad = (deg - 90) * Math.PI / 180;
+      const x = center + Math.cos(rad) * radius;
+      const y = center + Math.sin(rad) * radius;
+
+      // Tick
+      const tick = document.createElement('div');
+      tick.className = 'tick';
+      tick.style.left = `${x - 1}px`;
+      tick.style.top = `${y - 5}px`;
+      tick.style.transform = `rotate(${deg}deg)`;
+
+      // Label
+      const labelX = center + Math.cos(rad) * (radius - 15);
+      const labelY = center + Math.sin(rad) * (radius - 15);
+
+      const label = document.createElement('div');
+      label.className = 'label';
+      label.innerText = `${deg}°`;
+      label.style.left = `${labelX}px`;
+      label.style.top = `${labelY}px`;
+      label.style.transform = `translate(-50%, -50%)`;
+
+      radar.appendChild(tick);
+      radar.appendChild(label);
+    }
+
+    // Create the target blip
+    const blip = document.createElement('div');
+    blip.className = 'blip';
+    blip.style.left = '180px';
+    blip.style.top = '60px';
+    radar.appendChild(blip);
+
+    // Simulate target entering radar after 2 seconds
+    setTimeout(() => {
+      blip.classList.add('alert');
+    }, 2000);
+  </script>
+</body>
+</html>
