@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beautiful File Upload Animation</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      margin: 0;
+    }
+
+    .upload-box {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .file-label {
+      background-color: #ffffff20;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .file-label:hover {
+      background-color: #ffffff40;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background-color: rgba(255,255,255,0.3);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 20px;
+      visibility: hidden;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    .progress {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      box-shadow: 0 0 10px #00c6ff, 0 0 20px #0072ff;
+      transition: width 0.2s ease;
+    }
+
+    .progress-text {
+      margin-top: 15px;
+      font-weight: bold;
+      visibility: hidden;
+      font-size: 1.1em;
+    }
+
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top: 4px solid #fff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="upload-box">
+  <label class="file-label">
+    📁 Choose File
+    <input type="file" class="file-input" onchange="simulateFancyUpload()">
+  </label>
+
+  <div class="spinner" id="spinner"></div>
+
+  <div class="progress-bar" id="progressBar">
+    <div class="progress" id="progress"></div>
+  </div>
+  <div class="progress-text" id="progressText">0%</div>
+</div>
+
+<script>
+  function simulateFancyUpload() {
+    const progressBar = document.getElementById('progressBar');
+    const progress = document.getElementById('progress');
+    const progressText = document.getElementById('progressText');
+    const spinner = document.getElementById('spinner');
+
+    // Reset everything
+    progress.style.width = '0%';
+    progressText.textContent = '0%';
+    progressBar.style.visibility = 'hidden';
+    progressText.style.visibility = 'hidden';
+    spinner.style.display = 'block';
+
+    // Simulate a "fake upload" with a delay
+    setTimeout(() => {
+      spinner.style.display = 'none';
+      progressBar.style.visibility = 'visible';
+      progressText.style.visibility = 'visible';
+
+      let percent = 0;
+      const interval = setInterval(() => {
+        percent += Math.random() * 5; // random increments
+        if (percent >= 100) {
+          percent = 100;
+          clearInterval(interval);
+          progressText.textContent = '🎉 Upload Complete!';
+          progress.style.background = 'linear-gradient(90deg, #00ff88, #00cc66)';
+          progress.style.boxShadow = '0 0 10px #00ff88, 0 0 20px #00cc66';
+        } else {
+          progressText.textContent = `${Math.floor(percent)}%`;
+        }
+        progress.style.width = `${percent}%`;
+      }, 200);
+    }, 1500); // Simulate upload preparation (1.5s)
+  }
+</script>
+
+</body>
+</html>
