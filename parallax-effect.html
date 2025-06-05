@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Beautiful Parallax</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: sans-serif;
+    }
+
+    .parallax-container {
+      perspective: 1px; /* Create the 3D effect */
+      height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .parallax-layer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 100vh;
+      transform-origin: center center;
+    }
+
+    .layer-bg {
+      background: url('https://source.unsplash.com/1600x900/?nature,water') no-repeat center;
+      background-size: cover;
+      transform: translateZ(-1px) scale(2); /* Move back and scale up */
+      z-index: 1;
+    }
+
+    .layer-mid {
+      background: rgba(0, 0, 0, 0.3);
+      transform: translateZ(0);
+      z-index: 2;
+    }
+
+    .layer-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 3em;
+      transform: translateZ(0.5px) scale(0.8); /* Closer layer */
+      z-index: 3;
+    }
+
+    .content {
+      position: relative;
+      height: 100vh;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+    }
+  </style>
+</head>
+<body>
+
+<div class="parallax-container">
+  <div class="parallax-layer layer-bg"></div>
+  <div class="parallax-layer layer-mid"></div>
+  <div class="parallax-layer layer-content">Beautiful Parallax</div>
+</div>
+
+<div class="content">
+  Scroll for More Content
+</div>
+
+<div class="parallax-container">
+  <div class="parallax-layer layer-bg" style="background-image: url('https://source.unsplash.com/1600x900/?mountain');"></div>
+  <div class="parallax-layer layer-mid"></div>
+  <div class="parallax-layer layer-content">More Layers</div>
+</div>
+
+<div class="content">
+  Last Section
+</div>
+
+</body>
+</html>
