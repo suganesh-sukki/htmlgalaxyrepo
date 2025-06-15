@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gemini Loader</title>
+  <style>
+    body {
+      margin: 0;
+      background: #121212;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .gemini-loader {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      animation: rotate 1.5s linear infinite;
+    }
+
+    .dot {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #00bfff;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .dot:nth-child(2) {
+      top: auto;
+      bottom: 0;
+      background: #ff4081;
+      animation-delay: 0.75s;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: translateX(-50%) scale(0.5);
+        opacity: 0.5;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="gemini-loader">
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</body>
+</html>
