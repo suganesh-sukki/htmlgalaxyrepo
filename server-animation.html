@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Server Rack Animation</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: #0d1117;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .rack {
+      background: linear-gradient(to bottom, #1a1a1a, #2b2b2b);
+      padding: 20px 10px;
+      border-radius: 12px;
+      width: 240px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+      border: 2px solid #444;
+    }
+
+    .server {
+      background: linear-gradient(to right, #333, #444);
+      margin: 12px 0;
+      padding: 14px 10px;
+      border-radius: 6px;
+      position: relative;
+      box-shadow: inset 0 0 5px #000;
+      transition: transform 0.3s ease;
+    }
+
+    .server:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 10px rgba(0, 255, 100, 0.3);
+    }
+
+    .lights {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .light {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: gray;
+      animation: blink 1.5s infinite ease-in-out;
+    }
+
+    .red {
+      background: #ff3c3c;
+      animation-delay: 0s;
+    }
+
+    .yellow {
+      background: #ffe100;
+      animation-delay: 0.4s;
+    }
+
+    .green {
+      background: #00ff80;
+      animation-delay: 0.8s;
+    }
+
+    .label {
+      font-size: 12px;
+      color: #ccc;
+      text-align: right;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* Optional rack frame lines */
+    .rack::before, .rack::after {
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 3px;
+      background: #555;
+      top: 0;
+    }
+
+    .rack::before {
+      left: 10px;
+    }
+
+    .rack::after {
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="rack">
+    <!-- Repeatable Server Blocks -->
+    <div class="server">
+      <div class="lights">
+        <span class="light red"></span>
+        <span class="light yellow"></span>
+        <span class="light green"></span>
+      </div>
+      <div class="label">Server 01</div>
+    </div>
+
+    <div class="server">
+      <div class="lights">
+        <span class="light red"></span>
+        <span class="light yellow"></span>
+        <span class="light green"></span>
+      </div>
+      <div class="label">Server 02</div>
+    </div>
+
+    <div class="server">
+      <div class="lights">
+        <span class="light red"></span>
+        <span class="light yellow"></span>
+        <span class="light green"></span>
+      </div>
+      <div class="label">Server 03</div>
+    </div>
+
+    <div class="server">
+      <div class="lights">
+        <span class="light red"></span>
+        <span class="light yellow"></span>
+        <span class="light green"></span>
+      </div>
+      <div class="label">Server 04</div>
+    </div>
+  </div>
+</body>
+</html>
