@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>round Rotating Animation</title>
+    <style>
+        /* Basic body styling to center the animation */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            margin: 0;
+            background-color: #1a1a2e; /* Dark background for contrast */
+            overflow: hidden; /* Prevent scrollbars */
+            font-family: sans-serif;
+            color: #fff;
+        }
+
+        /* Container for the round animation elements */
+        .round-container {
+            position: relative;
+            width: 100px; /* Overall size of the animation */
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Common styles for the two rotating halves/arcs */
+        .round-half {
+            position: absolute;
+            width: 100%; /* Match container size */
+            height: 100%; /* Match container size */
+            border-radius: 50%; /* Make it circular */
+            box-sizing: border-box; /* Include padding/border in width/height */
+            border: 5px solid transparent; /* Base transparent border */
+        }
+
+        /* Style for the first half (blue arc) */
+        .round-half-1 {
+            border-top-color: #4a90e2; /* Blue for the top part of the circle's border */
+            border-left-color: #4a90e2; /* Blue for the left part to make a larger arc */
+            transform: rotate(45deg); /* Initial rotation to position it */
+            animation: rotateround1 4s linear infinite; /* Apply rotation animation */
+            box-shadow: 0 0 10px rgba(74, 144, 226, 0.7), 0 0 20px rgba(74, 144, 226, 0.5); /* Subtle glow */
+        }
+
+        /* Style for the second half (purple arc) */
+        .round-half-2 {
+            border-bottom-color: #7b4aeb; /* Purple for the bottom part of the circle's border */
+            border-right-color: #7b4aeb; /* Purple for the right part to make a larger arc */
+            transform: rotate(225deg); /* Initial rotation to position it (45 + 180) */
+            animation: rotateround2 4s linear infinite; /* Apply rotation animation */
+            box-shadow: 0 0 10px rgba(123, 74, 235, 0.7), 0 0 20px rgba(123, 74, 235, 0.5); /* Subtle glow */
+        }
+
+        /* Keyframes for the rotation of the first half */
+        @keyframes rotateround1 {
+            0% {
+                transform: rotate(45deg);
+            }
+            100% {
+                transform: rotate(405deg); /* 45deg + 360deg for one full rotation */
+            }
+        }
+
+        /* Keyframes for the rotation of the second half */
+        @keyframes rotateround2 {
+            0% {
+                transform: rotate(225deg);
+            }
+            100% {
+                transform: rotate(585deg); /* 225deg + 360deg for one full rotation */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="round-container">
+        <div class="round-half round-half-1"></div>
+        <div class="round-half round-half-2"></div>
+    </div>
+</body>
+</html>
