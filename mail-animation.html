@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enhanced Mail Animation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #fceabb, #f8b500);
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .mail-container {
+      position: relative;
+      width: 220px;
+      height: 180px;
+    }
+
+    .envelope {
+      width: 100%;
+      height: 120px;
+      background: #fff;
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .flap {
+      width: 100%;
+      height: 70px;
+      background: #e0e0e0;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      transform-origin: top center;
+      animation: flapOpen 1s ease-out forwards 0.6s;
+    }
+
+    .letter {
+      width: 160px;
+      height: 100px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      z-index: 1;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      animation: sendLetter 2.5s ease-out forwards 1.4s;
+    }
+
+    .letter::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 160px;
+      height: 100px;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.5) 0%, transparent 70%);
+      opacity: 0.3;
+    }
+
+    .success {
+      position: absolute;
+      top: 140px;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      color: #2d862d;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out forwards 3.6s;
+    }
+
+    @keyframes flapOpen {
+      to {
+        transform: rotateX(160deg);
+      }
+    }
+
+    @keyframes sendLetter {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(-80px) rotate(-5deg) scale(1.05);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-260px) translateX(60px) rotate(-12deg) scale(0.8);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mail-container">
+    <div class="envelope">
+      <div class="flap"></div>
+      <div class="letter"></div>
+    </div>
+    <div class="success">✅ Sent Successfully</div>
+  </div>
+</body>
+</html>
